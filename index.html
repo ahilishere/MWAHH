@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💖 Valentine Surprise for Zilya 💖</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    height: 100vh;
+    overflow: hidden;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  .slide.active {
+    display: flex;
+  }
+
+  h1 {
+    font-size: 3em;
+    margin-bottom: 1em;
+    animation: pulse 1s infinite;
+  }
+
+  button {
+    font-size: 1.2em;
+    padding: 0.8em 1.5em;
+    border: none;
+    border-radius: 50px;
+    background: #ff6f91;
+    color: white;
+    cursor: pointer;
+    margin: 0.5em;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s, background 0.3s;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+    background: #ff4d6d;
+  }
+
+  .typed-text {
+    font-size: 1.5em;
+    max-width: 600px;
+    line-height: 1.6em;
+    white-space: pre-wrap;
+    margin-bottom: 1em;
+    text-align: left;
+  }
+
+  img {
+    margin-top: 1em;
+    max-width: 300px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+
+  .heart {
+    position: absolute;
+    font-size: 2em;
+    animation: float 5s linear infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes float {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Slide 1: Valentine question -->
+<div class="slide active" id="slide1">
+  <h1>💖 Will you be my Valentine? 💖</h1>
+  <button id="yesBtn">YES 💕</button>
+  <button id="noBtn">NO 😅</button>
+</div>
+
+<!-- Slide 2: Confession message -->
+<div class="slide" id="slide2">
+  <h1>💕 ILYSM Zilya 💕</h1>
+  <div class="typed-text" id="confessionText"></div>
+  <button id="moreBtn2" style="display:none;">More 💖</button>
+</div>
+
+<!-- Slide 3: Final I love you more + cat -->
+<div class="slide" id="slide3">
+  <h1>💖 Last but not least 💖</h1>
+  <div class="typed-text" id="finalText"></div>
+  <img src="https://cataas.com/cat/cute" alt="Cute Cat">
+</div>
+
+<!-- Background love song -->
+<audio autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  // Floating hearts
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.innerText = '❤️';
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.fontSize = (20 + Math.random() * 40) + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+  }
+  setInterval(createHeart, 300);
+
+  const slide1 = document.getElementById('slide1');
+  const slide2 = document.getElementById('slide2');
+  const slide3 = document.getElementById('slide3');
+  const yesBtn = document.getElementById('yesBtn');
+  const noBtn = document.getElementById('noBtn');
+
+  // NO button click
+  let noClickCount = 0;
+  noBtn.addEventListener('click', () => {
+    noClickCount++;
+    alert(noClickCount === 1 ? "Nopeee 😅" : "Still nopeee 😜");
+  });
+
+  // YES button click → go to slide 2 with confession
+  yesBtn.addEventListener('click', () => {
+    slide1.classList.remove('active');
+    slide2.classList.add('active');
+    startTypingConfession();
+  });
+
+  // Confession typing
+  const confessionText = document.getElementById('confessionText');
+  const moreBtn2 = document.getElementById('moreBtn2');
+
+  const confessionMessage = `Ilysmmm zilya yu matter sooo soo much to Mee.
+
+I just wanted you to know how much you mean to me. Talking to you makes my days better, and being around you feels different in the best way. I really like you, and I’m grateful I get to spend this Valentine’s with youuu.
+
+-Yours forever: Aahil..❤️`;
+
+  function startTypingConfession() {
+    let i = 0;
+    function type() {
+      if (i < confessionMessage.length) {
+        confessionText.innerHTML += confessionMessage.charAt(i);
+        i++;
+        setTimeout(type, 40); // slightly faster typing
+      } else {
+        moreBtn2.style.display = 'inline-block';
+      }
+    }
+    type();
+  }
+
+  // More button → slide 3
+  moreBtn2.addEventListener('click', () => {
+    slide2.classList.remove('active');
+    slide3.classList.add('active');
+
+    const finalTextDiv = document.getElementById('finalText');
+    const finalMessage = `I LUVV YOUU WAYY MOREE MWAHH ILYSMSMSMSM 😘
+Accept that I luv yu way more 💕💕`;
+
+    let j = 0;
+    function typeFinal() {
+      if (j < finalMessage.length) {
+        finalTextDiv.innerHTML += finalMessage.charAt(j);
+        j++;
+        setTimeout(typeFinal, 40);
+      }
+    }
+    typeFinal();
+  });
+
+</script>
+</body>
+</html>
